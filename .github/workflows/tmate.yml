@@ -1,5 +1,3 @@
-新建一个github仓库名为video，创建一个文件，名为.github/workflows/tmate.yml，把下面的代码粘贴进去保存
-
 name: Create CpuZShv4
 
 on:
@@ -30,14 +28,13 @@ jobs:
       - name: 🔐 Start tmate session
         run: |
           echo "⚙️ Launching tmate..."
-          curl -sSf https://sshx.io/get | sh -s run
           sudo apt update && sudo apt install -y tmate
           tmate -S /tmp/tmate.sock new-session -d
           tmate -S /tmp/tmate.sock wait tmate-ready
           SSH=$(tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}')
           echo "$SSH" > "links/${{ github.event.client_payload.vps_name || 'manual-vps' }}.txt"
           echo "✅ SSH Ready: $SSH"
-          sleep 864000  # give time for GitHub to sync
+          sleep 21600  # give time for GitHub to sync
 
       - name: 📦 Save backup
         run: |
