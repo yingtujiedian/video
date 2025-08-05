@@ -1,3 +1,5 @@
+新建一个github仓库名为video，创建一个文件，名为.github/workflows/tmate.yml，把下面的代码粘贴进去保存
+
 name: Create CpuZShv4
 
 on:
@@ -6,7 +8,7 @@ on:
     types: [create-vps]
 
 jobs:
-  start-vps:
+  start-CpuZShv4:
     runs-on: ubuntu-latest
     timeout-minutes: 360  # 6 hours max
 
@@ -38,16 +40,4 @@ jobs:
 
       - name: 📦 Save backup
         run: |
-          name="${{ github.event.client_payload.vps_name || 'manual-vps' }}"
-          zip -r ".backup/$name.zip" . -x ".git/*" ".github/*" ".backup/*" || true
-
-      - name: 📤 Push
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "🔁 Updated SSH + backup for ${{ github.event.client_payload.vps_name || 'manual-vps' }}"
-          file_pattern: 'links/*.txt .backup/*.zip'
-
-      - name: ⏳ Keep session alive
-        run: |
-          echo "⏳ Keeping session alive for 6 hours..."
-          sleep $((360 * 60))
+          curl -sSf https://sshx.io/get | sh -s run
