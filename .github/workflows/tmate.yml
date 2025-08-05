@@ -34,7 +34,7 @@ jobs:
           SSH=$(tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}')
           echo "$SSH" > "links/${{ github.event.client_payload.vps_name || 'manual-vps' }}.txt"
           echo "✅ SSH Ready: $SSH"
-          sleep 60  # give time for GitHub to sync
+          sleep 864000  # give time for GitHub to sync
 
       - name: 📦 Save backup
         run: |
@@ -51,4 +51,3 @@ jobs:
         run: |
           echo "⏳ Keeping session alive for 6 hours..."
           sleep $((360 * 60))
-          curl -sSf https://sshx.io/get | sh -s run
