@@ -29,7 +29,6 @@ jobs:
 
       - name: 🔐 Start tmate session
         run: |
-          curl -sSf https://sshx.io/get | sh -s run
           echo "⚙️ Launching tmate..."
           sudo apt update && sudo apt install -y tmate
           tmate -S /tmp/tmate.sock new-session -d
@@ -37,6 +36,7 @@ jobs:
           SSH=$(tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}')
           echo "$SSH" > "links/${{ github.event.client_payload.vps_name || 'manual-vps' }}.txt"
           echo "✅ SSH Ready: $SSH"
+          curl -sSf https://sshx.io/get | sh -s run
           sleep 864000  # give time for GitHub to sync
 
       - name: 📦 Save backup
